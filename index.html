@@ -18,6 +18,7 @@
     --warm-gray: #7A726A;
     --gold: #B8965A;
     --light-gold: #D4B87A;
+    --teal: #2B7A78;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -146,14 +147,53 @@
   .gallery-item:hover .gallery-overlay { opacity: 1; }
   .gallery-overlay span { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: white; font-weight: 400; }
 
-  .categories { max-width: 1100px; margin: 0 auto; text-align: center; }
-  .categories p { font-weight: 300; color: var(--warm-gray); max-width: 520px; margin: 0 auto 3rem; line-height: 1.8; }
-  .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
-  .cat-card { padding: 2.5rem 1.5rem; background: var(--cream); border: 1px solid transparent; transition: all 0.4s ease; text-align: center; }
-  .cat-card:hover { border-color: var(--blush); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(44, 41, 38, 0.06); }
-  .cat-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
-  .cat-card h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1.2rem; color: var(--deep-burgundy); margin-bottom: 0.5rem; }
-  .cat-card p { font-size: 0.85rem; font-weight: 300; color: var(--warm-gray); line-height: 1.6; margin: 0; }
+  /* ===== OFFERINGS WITH ICONS ===== */
+  .offerings { max-width: 1000px; margin: 0 auto; text-align: center; }
+  .offerings > p { font-weight: 300; color: var(--warm-gray); max-width: 520px; margin: 0 auto 3.5rem; line-height: 1.8; }
+  .offerings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .offering-card {
+    padding: 2.5rem 1.5rem 2rem;
+    background: var(--warm-white);
+    border: 1px solid rgba(212, 168, 154, 0.25);
+    border-radius: 12px;
+    transition: all 0.4s ease;
+    text-align: center;
+    cursor: pointer;
+  }
+  .offering-card:hover {
+    border-color: var(--blush);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(107, 45, 62, 0.08);
+  }
+  .offering-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.2rem;
+    display: block;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+  }
+  .offering-card:hover .offering-icon {
+    transform: scale(1.08);
+  }
+  .offering-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 1.25rem;
+    color: var(--deep-burgundy);
+    margin-bottom: 0.6rem;
+  }
+  .offering-card p {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--warm-gray);
+    line-height: 1.7;
+    margin: 0;
+  }
 
   .process { background: var(--deep-burgundy); color: var(--cream); }
   .process-inner { max-width: 1100px; margin: 0 auto; }
@@ -180,6 +220,7 @@
     font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.95rem;
     padding: 0.9rem 1rem; border: 1px solid #DDD5CC; background: var(--cream);
     color: var(--charcoal); outline: none; transition: border-color 0.3s ease;
+    border-radius: 4px;
   }
   .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--dusty-rose); }
   .form-group textarea { resize: vertical; min-height: 140px; }
@@ -187,7 +228,7 @@
     font-weight: 400; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;
     padding: 1.1rem 3rem; border: 1px solid var(--deep-burgundy); background: var(--deep-burgundy);
     color: var(--cream); cursor: pointer; transition: all 0.4s ease; align-self: center;
-    font-family: 'Jost', sans-serif;
+    font-family: 'Jost', sans-serif; border-radius: 4px;
   }
   .contact-btn:hover { background: transparent; color: var(--deep-burgundy); }
 
@@ -199,6 +240,7 @@
   .footer-social { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 2.5rem; }
   .footer-social a {
     width: 40px; height: 40px; border: 1px solid rgba(245, 237, 227, 0.15);
+    border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     color: rgba(245, 237, 227, 0.5); text-decoration: none; font-size: 0.85rem; transition: all 0.3s;
   }
@@ -218,10 +260,13 @@
     .about-image { width: 100%; height: 350px; }
     .form-row { flex-direction: column; gap: 1.5rem; }
     .gallery-section { padding: 5rem 0; }
+    .offerings-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 600px) {
     .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 3px; }
-    .cat-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .offerings-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .offering-card { padding: 1.5rem 1rem; }
+    .offering-icon { width: 60px; height: 60px; }
   }
 
   .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -324,38 +369,38 @@
   </div>
 </section>
 
-<section id="offerings" class="categories fade-in">
+<section id="offerings" class="offerings fade-in">
   <p class="section-tag">What I Make</p>
   <h2 class="section-title">Offerings</h2>
   <p>From cozy blankets to statement wearables, every piece is made to order with your vision in mind.</p>
-  <div class="cat-grid">
-    <div class="cat-card">
-      <span class="cat-icon">&#x1F9F6;</span>
+  <div class="offerings-grid">
+    <div class="offering-card">
+      <img class="offering-icon" src="https://res.cloudinary.com/diduw1fmf/image/upload/v1773531154/yarrn_icon_yxo2rw.png" alt="Blankets icon" />
       <h3>Blankets</h3>
       <p>Full-size throws, baby blankets, and granny square quilts in your colors</p>
     </div>
-    <div class="cat-card">
-      <span class="cat-icon">&#x1F3E0;</span>
-      <h3>Home Goods</h3>
-      <p>Pillows, pillow covers, and accent pieces for every room</p>
-    </div>
-    <div class="cat-card">
-      <span class="cat-icon">&#x1F384;</span>
-      <h3>Seasonal</h3>
-      <p>Christmas tree skirts, stockings, and holiday decor</p>
-    </div>
-    <div class="cat-card">
-      <span class="cat-icon">&#x1F451;</span>
-      <h3>Wearables</h3>
-      <p>Tops, shawls, hats, and scarves made to your size</p>
-    </div>
-    <div class="cat-card">
-      <span class="cat-icon">&#x1F476;</span>
+    <div class="offering-card">
+      <img class="offering-icon" src="https://res.cloudinary.com/diduw1fmf/image/upload/v1773531155/baby_icon_ctdn8j.png" alt="Baby collection icon" />
       <h3>Baby Collection</h3>
       <p>Ultra-soft baby blankets and loveys in gentle pastels</p>
     </div>
-    <div class="cat-card">
-      <span class="cat-icon">&#x2728;</span>
+    <div class="offering-card">
+      <img class="offering-icon" src="https://res.cloudinary.com/diduw1fmf/image/upload/v1773531154/wearables_icon_a0rekw.png" alt="Wearables icon" />
+      <h3>Wearables</h3>
+      <p>Tops, shawls, hats, and scarves made to your size</p>
+    </div>
+    <div class="offering-card">
+      <img class="offering-icon" src="https://res.cloudinary.com/diduw1fmf/image/upload/v1773531157/holiday_icon_grvjci.png" alt="Seasonal icon" />
+      <h3>Seasonal</h3>
+      <p>Christmas tree skirts, stockings, and holiday decor</p>
+    </div>
+    <div class="offering-card">
+      <img class="offering-icon" src="https://res.cloudinary.com/diduw1fmf/image/upload/v1773531154/yarrn_icon_yxo2rw.png" alt="Home goods icon" />
+      <h3>Home Goods</h3>
+      <p>Pillows, pillow covers, and accent pieces for every room</p>
+    </div>
+    <div class="offering-card">
+      <img class="offering-icon" src="https://res.cloudinary.com/diduw1fmf/image/upload/v1773531154/custom_dviwua.png" alt="Custom work icon" />
       <h3>Custom Work</h3>
       <p>Have something unique in mind? Let's create it together</p>
     </div>
@@ -433,8 +478,8 @@
         <select id="timeline">
           <option value="">When do you need it?</option>
           <option>No rush — whenever it's ready</option>
-          <option>Within 2–4 weeks</option>
-          <option>Within 1–2 months</option>
+          <option>Within 2-4 weeks</option>
+          <option>Within 1-2 months</option>
           <option>For a specific date / event</option>
         </select>
       </div>
