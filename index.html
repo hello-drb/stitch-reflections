@@ -2,8 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Stitch Reflections — Handcrafted Crochet by Selena</title>
+<meta name="description" content="Custom handcrafted crochet blankets, wearables, and home goods by Selena. One-of-a-kind pieces made with love in Westchester, NY.">
+<meta property="og:title" content="Stitch Reflections — Handcrafted Crochet by Selena">
+<meta property="og:description" content="Custom handcrafted crochet blankets, wearables, and home goods. One-of-a-kind pieces made with love in Westchester, NY.">
+<meta property="og:image" content="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto,w_1200/cardigan_oadwi3.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Stitch Reflections — Handcrafted Crochet by Selena">
+<meta name="twitter:description" content="Custom handcrafted crochet blankets, wearables, and home goods. One-of-a-kind pieces made with love.">
+<meta name="twitter:image" content="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto,w_1200/cardigan_oadwi3.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -22,7 +35,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
   body {
     font-family: 'Jost', sans-serif;
@@ -33,16 +46,24 @@
 
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 1.2rem 3rem; display: flex; justify-content: space-between;
-    align-items: center; transition: all 0.5s ease; background: transparent;
+    padding: 0.6rem 3rem; display: flex; justify-content: space-between;
+    align-items: center; transition: all 0.5s ease;
+    background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(12px);
+    box-shadow: 0 1px 20px rgba(44, 41, 38, 0.06);
   }
   nav.scrolled {
-    background: rgba(245, 237, 227, 0.95); backdrop-filter: blur(12px);
-    box-shadow: 0 2px 30px rgba(44, 41, 38, 0.06); padding: 0.8rem 3rem;
+    background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px);
+    box-shadow: 0 2px 30px rgba(44, 41, 38, 0.08); padding: 0.4rem 3rem;
   }
   .nav-logo {
-    font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
-    font-weight: 500; color: var(--deep-burgundy); letter-spacing: 0.05em; text-decoration: none;
+    text-decoration: none; display: flex; align-items: center;
+  }
+  .nav-logo img {
+    height: 80px; width: auto;
+    transition: height 0.5s ease;
+  }
+  nav.scrolled .nav-logo img {
+    height: 60px;
   }
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a {
@@ -56,24 +77,90 @@
   }
   .nav-links a:hover::after { width: 100%; }
 
+  .hamburger {
+    display: none; background: none; border: none; cursor: pointer;
+    width: 32px; height: 24px; position: relative; z-index: 201;
+  }
+  .hamburger span {
+    display: block; width: 100%; height: 2px; background: var(--charcoal);
+    position: absolute; left: 0; transition: all 0.3s ease;
+  }
+  .hamburger span:nth-child(1) { top: 0; }
+  .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+  .hamburger span:nth-child(3) { bottom: 0; }
+  .hamburger.active span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px);
+    flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400;
+    color: var(--deep-burgundy); text-decoration: none; letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+  }
+  .mobile-menu a:hover { color: var(--dusty-rose); }
+
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 300;
+    background: rgba(44, 41, 38, 0.92); backdrop-filter: blur(8px);
+    align-items: center; justify-content: center; flex-direction: column;
+    padding: 2rem; cursor: pointer;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 90vw; max-height: 75vh; object-fit: contain;
+    border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: lightboxIn 0.3s ease;
+  }
+  @keyframes lightboxIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+  .lightbox-caption {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+    color: var(--cream); margin-top: 1.5rem; font-weight: 400;
+  }
+  .lightbox-close {
+    position: absolute; top: 2rem; right: 2rem;
+    background: none; border: none; color: var(--cream);
+    font-size: 1.8rem; cursor: pointer; opacity: 0.7; transition: opacity 0.3s;
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox-close:hover { opacity: 1; }
+
   .hero {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    position: relative;
-    background: linear-gradient(160deg, var(--cream) 0%, #EDE4D8 40%, #E8D5C8 70%, var(--blush) 100%);
-    overflow: hidden;
+    min-height: 100vh; min-height: 100dvh; display: flex; align-items: stretch;
+    position: relative; overflow: hidden;
   }
-  .hero::before {
+  .hero-left {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(160deg, var(--cream) 0%, #EDE4D8 40%, #E8D5C8 100%);
+    position: relative; padding: 6rem 4rem;
+  }
+  .hero-left::before {
+    content: ''; position: absolute; inset: 0; opacity: 0.05;
+    background-image: repeating-conic-gradient(rgba(107, 45, 62, 0.5) 0% 25%, transparent 0% 50%);
+    background-size: 30px 30px;
+    pointer-events: none;
+  }
+  .hero-right {
+    flex: 1; position: relative; overflow: hidden;
+  }
+  .hero-right img {
+    width: 100%; height: 100%; object-fit: cover;
+    animation: heroZoom 20s ease-in-out infinite alternate;
+  }
+  @keyframes heroZoom { from { transform: scale(1); } to { transform: scale(1.05); } }
+  .hero-right::after {
     content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 20% 80%, rgba(139, 158, 126, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 20%, rgba(212, 168, 154, 0.2) 0%, transparent 50%);
-  }
-  .hero-grain {
-    position: absolute; inset: 0; opacity: 0.03; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background: linear-gradient(to right, var(--cream) 0%, transparent 15%);
+    pointer-events: none;
   }
   .hero-content {
-    position: relative; z-index: 2; text-align: center;
-    max-width: 800px; padding: 2rem; animation: fadeUp 1.2s ease-out;
+    position: relative; z-index: 3; text-align: left;
+    max-width: 520px; animation: fadeUp 1.2s ease-out;
   }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
   .hero-tag {
@@ -82,26 +169,26 @@
   }
   .hero h1 {
     font-family: 'Cormorant Garamond', serif; font-weight: 300;
-    font-size: clamp(3rem, 7vw, 5.5rem); line-height: 1.1;
+    font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1.1;
     color: var(--deep-burgundy); margin-bottom: 1.5rem;
   }
   .hero h1 em { font-style: italic; font-weight: 300; color: var(--dusty-rose); }
   .hero-sub {
-    font-weight: 300; font-size: 1.1rem; line-height: 1.8;
-    color: var(--warm-gray); max-width: 520px; margin: 0 auto 2.5rem;
+    font-weight: 300; font-size: 1.05rem; line-height: 1.8;
+    color: var(--warm-gray); margin-bottom: 2.5rem;
   }
   .hero-cta {
     display: inline-block; font-weight: 400; font-size: 0.8rem;
     letter-spacing: 0.2em; text-transform: uppercase; padding: 1rem 2.5rem;
-    border: 1px solid var(--deep-burgundy); color: var(--deep-burgundy);
-    text-decoration: none; transition: all 0.4s ease;
+    background: var(--deep-burgundy); color: var(--cream);
+    text-decoration: none; transition: all 0.4s ease; border: 1px solid var(--deep-burgundy);
   }
-  .hero-cta:hover { background: var(--deep-burgundy); color: var(--warm-white); }
+  .hero-cta:hover { background: transparent; color: var(--deep-burgundy); }
 
   .scroll-indicator {
-    position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+    position: absolute; bottom: 3rem; left: 25%; transform: translateX(-50%);
     display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    animation: bounce 2s infinite;
+    animation: bounce 2s infinite; z-index: 3;
   }
   .scroll-indicator span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-gray); }
   .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--warm-gray), transparent); }
@@ -121,10 +208,13 @@
     background: var(--warm-white); display: flex; align-items: center;
     justify-content: center; gap: 5rem; max-width: 1200px; margin: 0 auto; flex-wrap: wrap;
   }
-  .about-image { width: 380px; height: 480px; position: relative; flex-shrink: 0; }
+  .about-photos { display: flex; flex-direction: column; gap: 1rem; flex-shrink: 0; width: 380px; }
+  .about-image { position: relative; overflow: hidden; }
+  .about-image.primary { height: 420px; }
+  .about-image.secondary { height: 380px; }
   .about-image::before {
     content: ''; position: absolute; top: -12px; left: -12px; right: 12px; bottom: 12px;
-    border: 1px solid var(--blush);
+    border: 1px solid var(--blush); z-index: 0;
   }
   .about-image img { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; }
   .about-text { flex: 1; min-width: 300px; max-width: 480px; }
@@ -135,7 +225,7 @@
   .gallery-header { text-align: center; padding: 0 3rem; margin-bottom: 4rem; }
   .gallery-header p { font-weight: 300; font-size: 1rem; color: var(--warm-gray); max-width: 520px; margin: 0 auto; line-height: 1.8; }
   .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 0 3rem; max-width: 1400px; margin: 0 auto; }
-  .gallery-item { position: relative; aspect-ratio: 1; overflow: hidden; cursor: pointer; }
+  .gallery-item { position: relative; aspect-ratio: 1; overflow: hidden; cursor: pointer; border-radius: 6px; }
   .gallery-item.tall { grid-row: span 2; }
   .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
   .gallery-item:hover img { transform: scale(1.05); }
@@ -162,6 +252,7 @@
     border-radius: 12px;
     transition: all 0.4s ease;
     text-align: center;
+    box-shadow: 0 2px 12px rgba(44, 41, 38, 0.03);
     cursor: pointer;
   }
   .offering-card:hover {
@@ -195,19 +286,30 @@
     margin: 0;
   }
 
-  .process { background: var(--deep-burgundy); color: var(--cream); }
-  .process-inner { max-width: 1100px; margin: 0 auto; }
+  .process { background: var(--deep-burgundy); color: var(--cream); position: relative; overflow: hidden; }
+  .process::before {
+    content: ''; position: absolute; inset: 0; opacity: 0.02;
+    background-image: repeating-conic-gradient(rgba(255,255,255,1) 0% 25%, transparent 0% 50%);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+  .process-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
   .process .section-tag { color: var(--light-gold); }
   .process .section-title { color: var(--cream); }
-  .process-subtitle { font-weight: 300; color: rgba(245, 237, 227, 0.6); max-width: 520px; line-height: 1.8; margin-bottom: 4rem; }
+  .process-subtitle { font-weight: 300; color: rgba(245, 237, 227, 0.8); max-width: 520px; line-height: 1.8; margin-bottom: 4rem; }
   .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 3rem; }
-  .step-num { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 300; color: rgba(245, 237, 227, 0.12); line-height: 1; margin-bottom: 1rem; }
+  .step-num { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 300; color: var(--light-gold); opacity: 0.5; line-height: 1; margin-bottom: 1rem; }
   .step h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1.2rem; color: var(--cream); margin-bottom: 0.75rem; }
-  .step p { font-weight: 300; font-size: 0.9rem; line-height: 1.7; color: rgba(245, 237, 227, 0.55); }
+  .step p { font-weight: 300; font-size: 0.9rem; line-height: 1.7; color: rgba(245, 237, 227, 0.9); }
 
-  .testimonial { background: var(--cream); text-align: center; padding: 6rem 3rem; }
-  .testimonial-inner { max-width: 700px; margin: 0 auto; }
-  .testimonial blockquote { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 300; font-style: italic; line-height: 1.6; color: var(--deep-burgundy); margin-bottom: 2rem; }
+  .testimonial { background: var(--cream); text-align: center; padding: 6rem 3rem; position: relative; }
+  .testimonial-inner { max-width: 700px; margin: 0 auto; position: relative; }
+  .testimonial-inner::before {
+    content: '\201C'; position: absolute; top: -2.5rem; left: 50%; transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif; font-size: 8rem; line-height: 1;
+    color: var(--blush); opacity: 0.3; pointer-events: none;
+  }
+  .testimonial blockquote { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 300; font-style: italic; line-height: 1.6; color: var(--deep-burgundy); margin-bottom: 2rem; position: relative; }
   .testimonial cite { font-weight: 300; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm-gray); font-style: normal; }
 
   .contact { max-width: 700px; margin: 0 auto; text-align: center; }
@@ -251,13 +353,26 @@
   .divider { display: flex; align-items: center; justify-content: center; gap: 1rem; padding: 0 3rem; }
   .divider-line { width: 60px; height: 1px; background: var(--blush); }
   .divider-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blush); }
+  .checker-strip {
+    width: 100%; height: 6px; opacity: 0.12;
+    background-image: repeating-conic-gradient(var(--deep-burgundy) 0% 25%, transparent 0% 50%);
+    background-size: 6px 6px;
+  }
 
   @media (max-width: 900px) {
-    nav { padding: 1rem 1.5rem; } nav.scrolled { padding: 0.7rem 1.5rem; }
-    .nav-links { display: none; } section { padding: 5rem 1.5rem; }
+    nav { padding: 0.5rem 1.5rem; } nav.scrolled { padding: 0.4rem 1.5rem; }
+    .nav-links { display: none; } .hamburger { display: block; } section { padding: 5rem 1.5rem; }
+    .hero { flex-direction: column; min-height: 100dvh; }
+    .hero-left { padding: 7rem 2rem 2rem; min-height: auto; flex: none; }
+    .hero-right { flex: 1; min-height: 40vh; }
+    .hero-right::after { background: linear-gradient(to bottom, var(--cream) 0%, transparent 15%); }
+    .hero-content { text-align: center; }
+    .scroll-indicator { display: none; }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); padding: 0 1.5rem; }
     .gallery-item.tall { grid-row: span 1; } .about { gap: 3rem; }
-    .about-image { width: 100%; height: 350px; }
+    .about-photos { width: 100%; flex-direction: row; gap: 0.75rem; }
+    .about-image.primary { height: 300px; flex: 1; }
+    .about-image.secondary { height: 300px; flex: 1; }
     .form-row { flex-direction: column; gap: 1.5rem; }
     .gallery-section { padding: 5rem 0; }
     .offerings-grid { grid-template-columns: repeat(2, 1fr); }
@@ -276,7 +391,7 @@
 <body>
 
 <nav id="nav">
-  <a href="#" class="nav-logo">Stitch Reflections</a>
+  <a href="#" class="nav-logo"><img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/v1773534930/logo_sr_biyauh.png" alt="Stitch Reflections"></a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#gallery">Gallery</a></li>
@@ -284,40 +399,36 @@
     <li><a href="#process">Process</a></li>
     <li><a href="#contact">Custom Orders</a></li>
   </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#gallery" onclick="toggleMenu()">Gallery</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#offerings" onclick="toggleMenu()">Offerings</a>
+  <a href="#process" onclick="toggleMenu()">Process</a>
+  <a href="#contact" onclick="toggleMenu()">Custom Orders</a>
+</div>
+
 <section class="hero">
-  <div class="hero-grain"></div>
-  <div class="hero-content">
-    <p class="hero-tag">Handcrafted Crochet &bull; Westchester, NY</p>
-    <h1>Threads That<br><em>Connect Us</em></h1>
-    <p class="hero-sub">Each stitch tells a story of warmth, comfort, and connection — crafted to bring beauty and meaning to your space.</p>
-    <a href="#contact" class="hero-cta">Request a Custom Piece</a>
+  <div class="hero-left">
+    <div class="hero-content">
+      <p class="hero-tag">Handcrafted Crochet &bull; Westchester, NY</p>
+      <h1>Threads That<br><em>Connect Us</em></h1>
+      <p class="hero-sub">Each stitch tells a story of warmth, comfort, and connection — crafted to bring beauty and meaning to your space.</p>
+      <a href="#contact" class="hero-cta">Request a Custom Piece</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto,w_1200/cardigan_oadwi3.png" alt="Rainbow patchwork crochet duster cardigan in a marble lobby" />
   </div>
   <div class="scroll-indicator">
     <span>Scroll</span>
     <div class="scroll-line"></div>
   </div>
 </section>
-
-<section id="about" class="about fade-in" style="padding: 7rem 3rem;">
-  <div class="about-image">
-    <img src="images/about-selena.jpg" alt="Selena, founder of Stitch Reflections" />
-  </div>
-  <div class="about-text">
-    <p class="section-tag">The Maker</p>
-    <h2 class="section-title">Meet Selena</h2>
-    <p>What started as a creative outlet during an uncertain time has grown into something deeply personal. With a background in neuroscience and psychology, Selena brings an intuitive eye for color, texture, and the emotional resonance of handmade objects.</p>
-    <p>Every blanket, every pillow, every stitch carries intention — designed not just to decorate a space, but to transform how it feels. Using premium, plush materials and a meticulous attention to detail, Stitch Reflections creates heirloom-quality pieces that are meant to be treasured.</p>
-    <p class="about-sig">— Selena</p>
-  </div>
-</section>
-
-<div class="divider">
-  <div class="divider-line"></div>
-  <div class="divider-dot"></div>
-  <div class="divider-line"></div>
-</div>
 
 <section id="gallery" class="gallery-section">
   <div class="gallery-header fade-in">
@@ -326,48 +437,79 @@
     <p>A selection of custom blankets, wearables, home goods, and seasonal pieces — each handcrafted with care.</p>
   </div>
   <div class="gallery-grid">
-    <div class="gallery-item tall">
-      <img src="images/IMG_7475.jpg" alt="Daisy granny square blanket in autumn colors" loading="lazy"/>
-      <div class="gallery-overlay"><span>Autumn Daisy Blanket</span></div>
+    <div class="gallery-item">
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/cardigan_oadwi3.png" alt="Rainbow patchwork crochet duster cardigan" loading="lazy"/>
+      <div class="gallery-overlay"><span>Rainbow Patchwork Duster</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/IMG_7483.jpg" alt="Blue baby blanket with floral granny squares" loading="lazy"/>
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/record_blanket_aa7xsr.png" alt="Crochet blanket with vinyl record circle motifs in blue, teal, and gold" loading="lazy"/>
+      <div class="gallery-overlay"><span>Vinyl Record Blanket</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/nirvana_flower_bag_phdjio.png" alt="Sunflower granny square shoulder bag with tassel" loading="lazy"/>
+      <div class="gallery-overlay"><span>Sunflower Granny Square Bag</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/blanket1_mtxypt.png" alt="Crochet blanket with four large daisies in rust and gold" loading="lazy"/>
+      <div class="gallery-overlay"><span>Four Daisies Blanket</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/flower_pillow_hqk5jb.png" alt="Retro daisy crochet pillow in rust and yellow" loading="lazy"/>
+      <div class="gallery-overlay"><span>Retro Daisy Pillow</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/top_qoqpwp.png" alt="Plum crochet crop top with V-neck" loading="lazy"/>
+      <div class="gallery-overlay"><span>Plum Crochet Top</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/v1773532805/Screenshot_2026-03-14_at_7.56.16_PM_p1ewhb.png" alt="Rainbow granny square cardigan — front, side, and back views" loading="lazy"/>
+      <div class="gallery-overlay"><span>Rainbow Granny Square Cardigan</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/tree_skirt_tgflpy.png" alt="Burgundy, green, and white spiral crochet tree skirt" loading="lazy"/>
+      <div class="gallery-overlay"><span>Holiday Tree Skirt</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/v1773532804/Screenshot_2026-03-14_at_7.56.45_PM_ch4ovs.png" alt="Blue baby blanket with floral granny squares" loading="lazy"/>
       <div class="gallery-overlay"><span>Blue Floral Baby Blanket</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/IMG_7481.jpg" alt="Close up of blue crochet blanket texture" loading="lazy"/>
-      <div class="gallery-overlay"><span>Detail — Plush Texture</span></div>
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/babyblanket_lovjx4.png" alt="Soft pink and cream baby blanket with scalloped edges" loading="lazy"/>
+      <div class="gallery-overlay"><span>Pink Lace Baby Blanket</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/pink-ruffle-blanket.png" alt="Pink baby blanket with ruffled edge" loading="lazy"/>
-      <div class="gallery-overlay"><span>Pink Ruffle Baby Blanket</span></div>
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/drinkholder_lttg5m.png" alt="Ombre teal-to-purple crochet drink cozy on iced coffee" loading="lazy"/>
+      <div class="gallery-overlay"><span>Ombre Drink Cozy</span></div>
     </div>
     <div class="gallery-item">
-      <img src="images/rainbow-shawl.png" alt="Colorful granny square shawl" loading="lazy"/>
-      <div class="gallery-overlay"><span>Rainbow Granny Shawl</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="images/snowflake-pillow.png" alt="Gray and white snowflake pillow" loading="lazy"/>
-      <div class="gallery-overlay"><span>Snowflake Pillow</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="images/christmas-tree-skirt.png" alt="Christmas tree skirt in red green and white" loading="lazy"/>
-      <div class="gallery-overlay"><span>Christmas Tree Skirt</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="images/shell-stitch-blanket.png" alt="White yellow and peach shell stitch blanket" loading="lazy"/>
-      <div class="gallery-overlay"><span>Shell Stitch Blanket</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="images/crochet-bralette.png" alt="Burgundy crochet bralette top" loading="lazy"/>
-      <div class="gallery-overlay"><span>Crochet Bralette</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="images/christmas-stocking.png" alt="Red and white Christmas stocking" loading="lazy"/>
-      <div class="gallery-overlay"><span>Christmas Stocking</span></div>
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/basket_z0h6qq.png" alt="Chunky crochet storage basket in earth tones" loading="lazy"/>
+      <div class="gallery-overlay"><span>Chunky Storage Basket</span></div>
     </div>
   </div>
 </section>
+
+<div class="checker-strip"></div>
+
+<section id="about" class="about fade-in" style="padding: 7rem 3rem;">
+  <div class="about-photos">
+    <div class="about-image primary">
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/selena_crochet_gxxbvo.jpg" alt="Selena, founder of Stitch Reflections, smiling with yarn and crochet hook" />
+    </div>
+    <div class="about-image secondary">
+      <img src="https://res.cloudinary.com/diduw1fmf/image/upload/q_auto,f_auto/v1773533175/IMG_7492_j9hqch.jpg" alt="Selena holding up a handmade autumn daisy granny square blanket" />
+    </div>
+  </div>
+  <div class="about-text">
+    <p class="section-tag">The Maker</p>
+    <h2 class="section-title">Meet Selena</h2>
+    <p>Selena's always had an eye for color — the kind of person whose biology notes looked like works of art, every concept mapped out in perfectly chosen gel-marker shades. That same instinct for pairing colors and finding beauty in patterns followed her through a career in science research, until she found the perfect medium for it.</p>
+    <p>For years, she's been crocheting blankets, pillows, shawls, hats, scarves, tops, Christmas stockings — every piece is a chance to play with color and texture and make something that feels like it was made just for you, because it was. The custom work is what she loves most: hearing someone's vision, picking the perfect palette, and creating something completely one-of-a-kind.</p>
+    <p>What started as a creative outlet quickly turned into a waitlist. So she made it official. Stitch Reflections is the result of hundreds of hours of stitching, an obsession with premium materials, and the joy of making something beautiful by hand.</p>
+    <p class="about-sig">— Selena</p>
+  </div>
+</section>
+
+<div class="checker-strip"></div>
 
 <section id="offerings" class="offerings fade-in">
   <p class="section-tag">What I Make</p>
@@ -440,8 +582,8 @@
 <section class="testimonial fade-in">
   <div class="testimonial-inner">
     <p class="section-tag">Kind Words</p>
-    <blockquote>"The blanket Selena made for my daughter's nursery is absolutely stunning. The colors are perfect, the texture is incredibly soft, and you can feel the love in every stitch. It's already a family heirloom."</blockquote>
-    <cite>— Happy Customer</cite>
+    <blockquote>"I received the most incredible, joy-sparking long cardigan, created by Selena — and couldn't love it any more than I do. You can tell that it's thoughtfully handcrafted, with beautiful colors and brilliant patterns. Plus, it's soft and comfy! It sparks so much joy every single time I look at it and wear it. It's truly a one-of-a-kind piece that I cherish."</blockquote>
+    <cite>— Tammy A.</cite>
   </div>
 </section>
 
@@ -449,21 +591,25 @@
   <p class="section-tag">Get in Touch</p>
   <h2 class="section-title">Request a Custom Piece</h2>
   <p>Have an idea for a blanket, pillow, wearable, or something entirely unique? I'd love to hear about it. Fill out the form below and I'll get back to you within 48 hours.</p>
-  <form class="contact-form" onsubmit="event.preventDefault(); alert('Thank you! Selena will be in touch soon.');">
+  <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="6b7bc7d5-293d-4358-92ec-591b58106f31">
+    <input type="hidden" name="subject" value="New Custom Order Request — Stitch Reflections">
+    <input type="hidden" name="from_name" value="Stitch Reflections Website">
+    <input type="checkbox" name="botcheck" style="display: none;">
     <div class="form-row">
       <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" id="name" required placeholder="Your name" />
+        <input type="text" id="name" name="name" required placeholder="Your name" />
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" required placeholder="your@email.com" />
+        <input type="email" id="email" name="email" required placeholder="your@email.com" />
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label for="category">What are you looking for?</label>
-        <select id="category">
+        <select id="category" name="category">
           <option value="">Select a category</option>
           <option>Blanket (full size)</option>
           <option>Baby Blanket</option>
@@ -475,7 +621,7 @@
       </div>
       <div class="form-group">
         <label for="timeline">Timeline</label>
-        <select id="timeline">
+        <select id="timeline" name="timeline">
           <option value="">When do you need it?</option>
           <option>No rush — whenever it's ready</option>
           <option>Within 2-4 weeks</option>
@@ -486,9 +632,10 @@
     </div>
     <div class="form-group">
       <label for="message">Tell me about your vision</label>
-      <textarea id="message" placeholder="Colors, size, who it's for, any inspiration photos..."></textarea>
+      <textarea id="message" name="message" placeholder="Colors, size, who it's for, any inspiration photos..."></textarea>
     </div>
     <button type="submit" class="contact-btn">Send Request</button>
+    <div id="formResult" style="text-align: center; margin-top: 1.5rem; font-weight: 300; display: none;"></div>
   </form>
 </section>
 
@@ -504,11 +651,16 @@
   <div class="footer-social">
     <a href="https://instagram.com/stitchreflections" target="_blank" aria-label="Instagram">IG</a>
     <a href="https://threads.net/@stitchreflections" target="_blank" aria-label="Threads">TH</a>
-    <a href="#" aria-label="Substack">SS</a>
   </div>
   <p class="footer-location">Westchester, NY &bull; Custom orders &amp; local delivery</p>
   <p class="footer-copy">&copy; 2026 Stitch Reflections. All rights reserved.</p>
 </footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+  <img id="lightbox-img" src="" alt="" />
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
 
 <script>
 const nav = document.getElementById('nav');
@@ -517,6 +669,67 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
 }, { threshold: 0.15 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Gallery lightbox
+document.querySelectorAll('.gallery-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const img = item.querySelector('img');
+    const caption = item.querySelector('.gallery-overlay span');
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox-img').alt = img.alt;
+    document.getElementById('lightbox-caption').textContent = caption ? caption.textContent : '';
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+});
+function closeLightbox(e) {
+  if (e.target === document.getElementById('lightbox') || e.target.classList.contains('lightbox-close')) {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+});
+
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.querySelector('.hamburger').classList.toggle('active');
+  document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
+}
+
+// Web3Forms AJAX submit
+const form = document.getElementById('contactForm');
+const resultDiv = document.getElementById('formResult');
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = form.querySelector('.contact-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: new FormData(form)
+    });
+    const data = await res.json();
+    if (data.success) {
+      resultDiv.style.display = 'block';
+      resultDiv.style.color = '#2B7A78';
+      resultDiv.textContent = 'Thank you! Selena will be in touch within 48 hours.';
+      form.reset();
+    } else {
+      resultDiv.style.display = 'block';
+      resultDiv.style.color = '#6B2D3E';
+      resultDiv.textContent = 'Something went wrong. Please try again or email directly.';
+    }
+  } catch (err) {
+    resultDiv.style.display = 'block';
+    resultDiv.style.color = '#6B2D3E';
+    resultDiv.textContent = 'Something went wrong. Please try again or email directly.';
+  }
+  btn.textContent = 'Send Request';
+  btn.disabled = false;
+});
 </script>
 </body>
 </html>
